@@ -4,7 +4,7 @@ html {
 body {
   padding:0;
   margin:0;
-  background-color:#45AEAF;
+  background-color:#323232;
   font-size:100%;
 }
 #content {
@@ -24,7 +24,7 @@ body {
 h1 {
   padding:0 0 12px 0;
   margin:0;
-  color:#65CECF;
+  color:#323232;
   text-transform:uppercase;
   font-weight:900;
   font-size:28px;
@@ -38,18 +38,32 @@ p {
   font-size:20px;
   line-height:28px;
 }
+p code {
+  background-color:#E0E0E0;
+  color:#202020;
+  display:inline;
+  margin:0 -2px;
+  padding:0 4px;
+}
 p a {
- color:#65CECF;
+ color:#323232;
  text-decoration:underline;
  font-weight:700;
 }
 p a:hover {
-  color:#55BEBF;
+  color:#121212;
 }
 #credits {
   text-align:center;
   color:rgba(255,255,255,0.54);
   font-size:12px;
+}
+#credits a {
+  color:rgba(255,255,255,0.54);
+  text-decoration:underline;
+}
+#credits a:hover {
+  color:rgba(255,255,255,0.88);
 }
 
 /* Mobile web page formatting */
