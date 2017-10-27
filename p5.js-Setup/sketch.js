@@ -1,5 +1,24 @@
 /** Initialize our `x` variable to use. */
-var x;
+var rectX;
+var rectY;
+var canvasWidth = 640;
+var canvasHeight = 480;
+var rectWidth = 200;
+var rectHeight = 150;
+
+var velocityX;
+var velocityY;
+
+
+function velocityValue() {
+  var velocity = (random() * 6) - 3;
+  return velocity;
+}
+
+function defineVelocity() {
+  velocityX = velocityValue();
+  velocityY = velocityValue();
+}
 
 
 /**
@@ -7,8 +26,11 @@ var x;
  * Start our `x` variable at 100.
  */
 function setup() {
-  createCanvas(640, 480);
-  x = 100;
+  createCanvas(canvasWidth, canvasHeight);
+  rectX = (canvasWidth / 2) - (rectWidth / 2);
+  rectY = (canvasHeight / 2) - (rectHeight / 2);
+ 
+  defineVelocity();
 }
 
 /**
@@ -17,10 +39,19 @@ function setup() {
  * Reset rectangle back to 100px from left after it leaves the screen.
  */
 function draw() {
-  background(255, 255, 255);
-  rect(x, 150, 200, 120);
-  x = x + 1;
-  if (x > 640) {
-    x = 100;
+  background(255, 0, 255);
+  rect(rectX, rectY, rectWidth, rectHeight);
+
+  rectX = rectX + velocityX;
+  rectY = rectY + velocityY;
+
+  if (rectX <= 0) {
+    defineVelocity();
+  } else if (rectY <= 0) {
+    defineVelocity();
+  } else if ((rectX + rectWidth) > canvasWidth) {
+    defineVelocity();
+  } else if ((rectY + rectHeight) > canvasHeight) {
+    defineVelocity();
   }
 }
