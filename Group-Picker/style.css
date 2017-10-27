@@ -1,0 +1,12 @@
+.row > div[class^="col-"] {
+  padding-bottom: 20px;
+}
+.row {
+  padding-top: 15px;
+  margin-bottom: -20px;
+}
+
+.group-box, .topic-box {
+  border: 1px solid #DDD;
+  padding: 10px 20px;
+}
