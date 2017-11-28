@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <!-- To ensure proper rendering and touch zoom in mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>POP 640 Winter 2017 Group Picker</title>
+
+  <!-- link to Bootstrap library -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- my style sheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<div class="container">
+    <h1 class="text-center">POP 640 Winter 2017 Group Assignments</h1>
+    <hr />
+
+    <h2>Group Assignments</h2>
+    <p>Group assignments were picked algorithmically based on your Github username. You can inspect this code <a href="https://github.com/coding-for-creatives-winter-2017/examples/blob/master/Group-Picker/index.html">here</a> to see how this list was chosen.</p>
+    <div id="group-list" class="row">
+      <!-- The group assignment list will populate in this element -->
+    </div>
+
+    <hr />
+
+    <h2>Topics</h2>
+    <p>You and your group members need to decide on a topic by class on <b>Oct 30<sup>th</sup></b>.<br /><em class="text-danger">You should choose a second topic in the event another group chooses your favorite.</em></p>
+    <div class="row">
+      <div class="col-md-4 col-xs-6">
+        <div class="topic-box">
+          <h4>Augmented &amp; Virtual Reality</h4>
+          <p>Our visual world will become smarter and unreal. What can you design for creating spectacular experiences?</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-xs-6">
+        <div class="topic-box">
+          <h4>Bitcoin, Blockchain &amp; Cryptocurrency</h4>
+          <p>How can cryptocurrency &amp; blockchain technologies shape a new version of the Web &amp; financial world markets?</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-xs-6">
+        <div class="topic-box">
+          <h4>Conversational Interfaces (Bots &amp; Voice)</h4>
+          <p>Voice and text are powering a new frontier of apps. How can you create exciting apps using text and voice?</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-xs-6">
+        <div class="topic-box">
+          <h4>Internet of Things (Devices)</h4>
+          <p>From watches to washing machines, how will our everyday life change with these devices?</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-xs-6">
+        <div class="topic-box">
+          <h4>Machine Learning &amp; Artifical Intelligence</h4>
+          <p>ML &amp; AI aim to make us smarter. How and what can we expect from these new technologies?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- embedded script to generate group assignments -->
+  <script>
+    // Number of groups
+    var numberOfGroups = 4;
+
+    // List of student's github usernames
+    var students = ['alliebsmith', 'danatgold', 'jrkgonzalez', 'luispaladino', 'maaikepull', 'molliecoyne4', 'rpower10', 'sunjaybahadur'];
+
+    // Determine number of students per group, round up to higher (ceiling) value
+    var studentsPerGroup = Math.ceil(students.length / numberOfGroups);
+
+    // Get a value associated to a name. (Use name's average ASCII character code.)
+    var shuffledList = students.slice(0); // copy list
+    for (var i = students.length - 1; i > 0; i--) {
+      // Count the place value of each character and get ASCII character code average
+      var sum = 0;
+      for (var n = 0; n < students[i].length; n++) {
+        sum += students[i].charCodeAt(n);
+      }
+      // Get our sortValue based on scale of 0 to 1 from average ASCII character code (65535 is max)
+      var sortValue = (sum / students[i].length) / 65535;
+
+      // Determine new placement of array, shuffle it around
+      var newIndex = Math.floor(sortValue * (i + 1));
+      var temp = shuffledList[i];
+      shuffledList[i] = shuffledList[newIndex];
+      shuffledList[newIndex] = temp;
+    }
+
+    // Put into groups
+    var groups = [];
+    for (var i = 0; i < shuffledList.length; i++) {
+      // Get which grouping, e.g. 0,1 -> group 0; 2,3 -> group 1; ...
+      var group = Math.floor(i / studentsPerGroup);
+      // Create an array in our groups array if it does not exist
+      if (!groups[group]) {
+        groups[group] = [];
+      }
+      // Push student's name into that array in our group
+      groups[group].push(shuffledList[i]);
+    }
+
+    // Generate our HTML by looping through each group and listing members
+    var html = '';
+    for (var i = 0; i < groups.length; i++) {
+      // We are doing some cool string stuff here by joining items in the array with <br>
+      var members = groups[i].join('<br>');
+
+      // Append our HTML
+      html += '<div class="col-md-3 col-xs-6">\n';
+      html += '  <div class="group-box">';
+      html += '    <h4>Group '+ (i + 1) + '</h4>\n';
+      html += '    <p>' + members + '</p>\n';
+      html += '  </div>';
+      html += '</div>\n';
+    }
+
+    console.log('Our final HTML:');
+    console.log(html);
+
+    // Insert HTML into DOM where #group-list is
+    document.getElementById('group-list').innerHTML = html;
+  </script>
+</body>
+</html>
